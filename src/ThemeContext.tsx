@@ -1,10 +1,12 @@
 import React, { useState, createContext, useContext } from "react";
 import styled, { ThemeProvider } from "styled-components";
-import { backgroundColor, textColor } from "./theme";
+import { buttonBackgroundColor, buttonTextColor, writingFieldBackground, writingFieldText, backgroundColor, textColor } from "./theme";
+
+
 
 const ThemeToggleContext = createContext({
   toggle: () => {
-    // empty
+    // empty, why is this here?
   },
 });
 
@@ -12,13 +14,30 @@ const ThemeToggleContext = createContext({
 //   children: JSX.Element,
 // };
 
-export const useTheme = () => useContext(ThemeToggleContext);
+// STYLED COMPONENTS 
 
-export const MyThemeProvider = ({children}: any) => {
-  const Wrapper = styled.div`
+export const Button = styled.button`
+background-color: ${buttonBackgroundColor}
+color: ${buttonTextColor}
+`;
+
+export const TextArea = styled.textarea`
+background-color: ${writingFieldBackground};
+color: ${writingFieldText};
+`;
+
+export const Wrapper = styled.div`
     background-color: ${backgroundColor};
     color: ${textColor};
   `;
+
+export const useTheme = () => useContext(ThemeToggleContext);
+
+export const MyThemeProvider = ({children}: any) => {
+  //the style properties are in the small components like 'Wrapper' and 'Button'
+  
+
+  
 
   // THEME STATE
   const [themeState, setThemeState] = useState({

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { useTheme } from "../ThemeContext";
-import styled, { withTheme } from "styled-components";
-import { buttonBackgroundColor, buttonTextColor } from "../theme";
+import React, { useState, useRef, useLayoutEffect } from "react";
+import { Button, TextArea, useTheme } from "../ThemeContext";
+import { withTheme } from "styled-components";
+import Sounds from "./Sounds";
 
 /* 
 
@@ -11,19 +11,25 @@ By clicking on the 'Save' button, the following should happen:
 - Action on submit is also to save the file to local computer 
 
 */
-const navElements: string[] = ["Save", "Sound", "Theme", "Font"];
+
+  // VARIABLES
+  // const audioClip: HTMLAudioElement = document.getElementById("audioClip")[0]
+
 
 const WritingField = (props: any) => {
   // CONTEXT
   const themeToggle = useTheme();
-
-  const Button = styled.button`
-  background: ${buttonBackgroundColor}
-  color: ${buttonTextColor}
-  `;
+  //why do we use themeToggle.toggle() as the function?
 
   // STATES
   const [text, setText] = useState("");
+
+  // REFS
+  const soundFXRef = useRef<HTMLAudioElement>(null);
+
+  useLayoutEffect(() => {
+    console.log(soundFXRef.current);
+  });
 
   // FUNCTIONS
   const handleSubmit = (e: any) => {
@@ -36,20 +42,41 @@ const WritingField = (props: any) => {
   };
 
   const handleToggle = () => {
-    themeToggle.toggle()
+    themeToggle.toggle();
     console.log("Toggled!");
+  };
+
+  const handleKeyPress = () => {
+    // const audioClip: any = document.getElementsByClassName("audio-clip")[0];
+    // console.log(audioClip)
+    console.log(soundFXRef);
+
+    // soundFXRef.play();
+
+    console.log("Key pressed!");
+  };
+
+  const toggleSound = () => {
+    console.log("Sound toggled!");
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div className="helper">
         <div className="writingField">
-          <textarea
+          <TextArea
+            onKeyDown={handleKeyPress}
             className="writingInput"
             placeholder="This is where you write stuff."
             value={text}
             onChange={(e) => setText(e.target.value)}
-          ></textarea>
+          >
+            
+          </TextArea>
+          <audio id="audioClip" ref={soundFXRef} autoPlay controls>
+              Audio not defined
+              <source src="typewriter_click.wav"></source>
+            </audio>
         </div>
       </div>
 
@@ -60,20 +87,21 @@ const WritingField = (props: any) => {
         </button>
         <button onClick={handleDownload} className="navEl" value="download">
           Download
-        </button>
-        <button className="navEl" value="sound">
-          Sound
         </button> */}
-        <Button onClick={handleToggle} className="navEl" value="theme">
-         {props.theme.mode === 'dark' ? 'Light Mode' : 'Dark Mode'}
+
+        <Button onClick={toggleSound} value="sound">
+          Sound
+        </Button>
+        <Button onClick={handleToggle} value="theme">
+          {props.theme.mode === "dark" ? "Light Mode" : "Dark Mode"}
         </Button>
 
-        <button className="navEl" value="minus">
+        {/* <button className="navEl" value="minus">
           -
         </button>
         <button className="navEl" value="plus">
           +
-        </button>
+        </button> */}
         {/* <{navElements.map((navEl) => <button className="navEl">{navEl}</button>)}> */}
       </div>
     </form>

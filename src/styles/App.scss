@@ -66,7 +66,15 @@ header {
 
 /***********************/
 
+/**** SOUNDS ****/ 
+
+.audio-clip {
+  display: none;
+}
+
 /**** INPUT ****/
+
+
 .helper {
   display: flex;
   justify-content: center;
@@ -82,7 +90,6 @@ header {
     .writingInput {
       /* how to you put width of the input here?*/
       // align-self: center;
-      color: $black;
       box-sizing: border-box;
       border: 0;
       overflow-y: scroll;

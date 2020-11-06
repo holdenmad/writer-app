@@ -2,19 +2,13 @@ import React, { useState, useRef, useLayoutEffect } from "react";
 import { Button, TextArea, useTheme } from "../ThemeContext";
 import { withTheme } from "styled-components";
 import Sounds from "./Sounds";
+import ReactPlayer from 'react-player'
 
-/* 
+// import audioClip from '../assets/typewriter_click.wav'
+// Audio works with external link but not internally
 
-By clicking on the 'Save' button, the following should happen:
-- Textarea is 'submitted' in form
-- Action on submit is to turn the text in the text area into a file (what type?)
-- Action on submit is also to save the file to local computer 
-
-*/
-
-  // VARIABLES
-  // const audioClip: HTMLAudioElement = document.getElementById("audioClip")[0]
-
+// VARIABLES
+// const audioClip: HTMLAudioElement = document.getElementById("audioClip")[0]
 
 const WritingField = (props: any) => {
   // CONTEXT
@@ -28,7 +22,7 @@ const WritingField = (props: any) => {
   const soundFXRef = useRef<HTMLAudioElement>(null);
 
   useLayoutEffect(() => {
-    console.log(soundFXRef.current);
+    // console.log(soundFXRef.current);
   });
 
   // FUNCTIONS
@@ -47,13 +41,11 @@ const WritingField = (props: any) => {
   };
 
   const handleKeyPress = () => {
-    // const audioClip: any = document.getElementsByClassName("audio-clip")[0];
-    // console.log(audioClip)
-    console.log(soundFXRef);
-
-    // soundFXRef.play();
-
-    console.log("Key pressed!");
+    console.log(soundFXRef.current);
+    if (soundFXRef.current !== null) {
+      soundFXRef.current.play();
+      console.log(soundFXRef.current.play())
+    }
   };
 
   const toggleSound = () => {
@@ -70,13 +62,14 @@ const WritingField = (props: any) => {
             placeholder="This is where you write stuff."
             value={text}
             onChange={(e) => setText(e.target.value)}
-          >
-            
-          </TextArea>
-          <audio id="audioClip" ref={soundFXRef} autoPlay controls>
-              Audio not defined
-              <source src="typewriter_click.wav"></source>
-            </audio>
+          ></TextArea>
+
+        
+          <audio id="audioClip" ref={soundFXRef} autoPlay controls hidden>
+            Audio not defined
+            <source src="http://soundbible.com/grab.php?id=2108&type=mp3"></source>
+          </audio>
+
         </div>
       </div>
 

@@ -1,14 +1,10 @@
 import React, { useState, useRef, useLayoutEffect } from "react";
 import { Button, TextArea, useTheme } from "../ThemeContext";
 import { withTheme } from "styled-components";
-import Sounds from "./Sounds";
-import ReactPlayer from 'react-player'
+// import ReactPlayer from 'react-player' (should I use this instead or the normal audio element?)
 
 // import audioClip from '../assets/typewriter_click.wav'
-// Audio works with external link but not internally
-
-// VARIABLES
-// const audioClip: HTMLAudioElement = document.getElementById("audioClip")[0]
+//Why doesn't this work?
 
 const WritingField = (props: any) => {
   // CONTEXT
@@ -21,74 +17,71 @@ const WritingField = (props: any) => {
   // REFS
   const soundFXRef = useRef<HTMLAudioElement>(null);
 
-  useLayoutEffect(() => {
-    // console.log(soundFXRef.current);
-  });
-
   // FUNCTIONS
+
+  //Theme Toggler
+  const handleToggle = () => {
+    themeToggle.toggle();
+  };
+
+  //Sound Effects with KeyDown
+  const handleKeyDown = () => {
+    console.log(soundFXRef.current);
+    if (soundFXRef.current !== null) {
+      soundFXRef.current.play();
+      console.log(soundFXRef.current.play());
+    }
+  };
+
+  //Sound toggler (not finished)
+  const toggleSound = () => {
+    console.log("Sound toggled!");
+  };
+
+  //Submit Form (not working, only here to validate)
   const handleSubmit = (e: any) => {
     e.preventDefault();
     console.log(text);
   };
 
-  const handleDownload = (e: any) => {
-    console.log("File downloaded!");
-  };
+  // const handleDownload = (e: any) => {
+  //   console.log("File downloaded!");
+  // };
 
-  const handleToggle = () => {
-    themeToggle.toggle();
-    console.log("Toggled!");
-  };
-
-  const handleKeyPress = () => {
-    console.log(soundFXRef.current);
-    if (soundFXRef.current !== null) {
-      soundFXRef.current.play();
-      console.log(soundFXRef.current.play())
-    }
-  };
-
-  const toggleSound = () => {
-    console.log("Sound toggled!");
-  };
+  
 
   return (
     <form onSubmit={handleSubmit}>
       <div className="helper">
         <div className="writingField">
           <TextArea
-            onKeyDown={handleKeyPress}
+            onKeyDown={handleKeyDown}
             className="writingInput"
             placeholder="This is where you write stuff."
             value={text}
             onChange={(e) => setText(e.target.value)}
           ></TextArea>
 
-        
           <audio id="audioClip" ref={soundFXRef} autoPlay controls hidden>
             Audio not defined
             <source src="http://soundbible.com/grab.php?id=2108&type=mp3"></source>
           </audio>
-
         </div>
       </div>
 
-      {/* <input type="submit" value="submit"></input> */}
       <div className="navbar">
+        <Button onClick={handleToggle} value="theme">
+          {props.theme.mode === "dark" ? "Light Mode" : "Dark Mode"}
+        </Button>
+        {/* <Button onClick={toggleSound} value="sound">
+          Sound
+        </Button> */}
         {/* <button type="submit" value="submit" className="navEl">
           Save
         </button>
         <button onClick={handleDownload} className="navEl" value="download">
           Download
-        </button> */}
-
-        <Button onClick={toggleSound} value="sound">
-          Sound
-        </Button>
-        <Button onClick={handleToggle} value="theme">
-          {props.theme.mode === "dark" ? "Light Mode" : "Dark Mode"}
-        </Button>
-
+  </button> */}
         {/* <button className="navEl" value="minus">
           -
         </button>

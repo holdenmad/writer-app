@@ -26,8 +26,9 @@ const WritingField = (props: any) => {
 
   //Sound Effects with KeyDown
   const handleKeyDown = () => {
-    console.log(soundFXRef.current);
+    console.log(soundFXRef.current?.currentTime);
     if (soundFXRef.current !== null) {
+      soundFXRef.current.currentTime = 0;
       soundFXRef.current.play();
       console.log(soundFXRef.current.play());
     }
@@ -47,8 +48,6 @@ const WritingField = (props: any) => {
   // const handleDownload = (e: any) => {
   //   console.log("File downloaded!");
   // };
-
-  
 
   return (
     <form onSubmit={handleSubmit}>
